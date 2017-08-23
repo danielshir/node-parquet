@@ -28,6 +28,7 @@
       '<(module_root_dir)/build_deps/parquet-cpp/arrow_ep-prefix/src/arrow_ep-build/brotli_ep-prefix/src/brotli_ep-build/libbrotlienc.a',
       '<(module_root_dir)/build_deps/parquet-cpp/arrow_ep-prefix/src/arrow_ep-build/brotli_ep-prefix/src/brotli_ep-build/libbrotlicommon.a',
       '<(module_root_dir)/build_deps/parquet-cpp/thrift_ep/src/thrift_ep-install/lib/libthrift.a',
+      '-L/usr/local/lib',
       '-lboost_regex',
       ],
     },
