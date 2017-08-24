@@ -87,7 +87,10 @@ void ParquetReader::Info(const Nan::FunctionCallbackInfo<Value>& info) {
   int colCount = schemaDesc->num_columns();
   Local<Array> schemaArr = Nan::New<Array>(colCount);
   for (int i = 0; i < colCount; i++) {
-    schemaArr->Set(Nan::New<Number>(i), Nan::New(schemaDesc->Column(i)->name().c_str()).ToLocalChecked());
+    Local<Object> colinfo = Nan::New<Object>();
+    colinfo->Set(Nan::New("name").ToLocalChecked(), Nan::New(schemaDesc->Column(i)->name().c_str()).ToLocalChecked());
+    colinfo->Set(Nan::New("type").ToLocalChecked(), Nan::New<Number>(schemaDesc->Column(i)->physical_type()));
+    schemaArr->Set(Nan::New<Number>(i), colinfo);
   }
   res->Set(Nan::New("schema").ToLocalChecked(), schemaArr);
 
