@@ -81,6 +81,18 @@ void ParquetReader::Info(const Nan::FunctionCallbackInfo<Value>& info) {
   res->Set(Nan::New("columns").ToLocalChecked(), Nan::New<Number>(file_metadata->num_columns()));
   res->Set(Nan::New("rows").ToLocalChecked() , Nan::New<Number>(file_metadata->num_rows()));
 
+  // Added by D
+  // Add additional schema information
+  const parquet::SchemaDescriptor* schemaDesc = file_metadata->schema();
+  int colCount = schemaDesc->num_columns();
+  Local<Array> schemaArr = Nan::New<Array>(colCount);
+  for (int i = 0; i < colCount; i++) {
+    schemaArr->Set(Nan::New<Number>(i), Nan::New(schemaDesc->Column(i)->name().c_str()).ToLocalChecked());
+  }
+  res->Set(Nan::New("schema").ToLocalChecked(), schemaArr);
+
+
+
   info.GetReturnValue().Set(res);
 }
 
