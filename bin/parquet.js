@@ -5,6 +5,7 @@
 const parquet = require('../index.js');
 
 const argv = require('minimist')(process.argv.slice(2), {
+  string: '_',
   boolean: [
     'h', 'help',
     'V', 'version'
@@ -50,7 +51,6 @@ switch (argv._[0]) {
 }
 
 function cat(file, max) {
-  console.log('cat', file);
   const reader = new parquet.ParquetReader(file);
   const info = reader.info();
   const n = max < info.rows ? max : info.rows;
@@ -67,5 +67,5 @@ function die(err) {
 
 function info(file) {
   const reader = new parquet.ParquetReader(file);
-  console.log(reader.info());
+  process.stdout.write(JSON.stringify(reader.info(), null, 2) + '\n');
 }
